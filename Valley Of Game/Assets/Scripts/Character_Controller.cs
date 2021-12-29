@@ -13,5 +13,14 @@ public class Character_Controller : MonoBehaviour
         float verticalInput = Input.GetAxis("Vertical");
 
         transform.Translate(new Vector3(horizontalInput, verticalInput, 0) * moveSpeed * Time.deltaTime);
+
+        Dash();
     }
+
+    void Dash()
+	{
+        if (Input.GetButtonDown("Jump")){
+            Debug.Log("Yo !");
+		}
+	}
 }
