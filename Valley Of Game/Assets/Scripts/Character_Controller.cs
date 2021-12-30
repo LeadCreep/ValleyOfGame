@@ -4,23 +4,39 @@ using UnityEngine;
 
 public class Character_Controller : MonoBehaviour
 {
-    float moveSpeed = 10f;
+    
+    public float defaultSpeed = 10f;
+    public float dashSpeed = 20f;
+    public float dashDelay = 0.5f;
+    float moveSpeed;
 
-    // Update is called once per frame
-    void Update()
+	private void Start()
+	{
+        moveSpeed = defaultSpeed;
+	}
+	
+	void Update()
     {
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
-        transform.Translate(new Vector3(horizontalInput, verticalInput, 0) * moveSpeed * Time.deltaTime);
-
         Dash();
+
+        transform.Translate(new Vector3(horizontalInput, verticalInput, 0) * moveSpeed * Time.deltaTime);        
     }
 
     void Dash()
 	{
         if (Input.GetButtonDown("Jump")){
-            Debug.Log("Yo !");
-		}
+            moveSpeed = dashSpeed;
+            StartCoroutine(ResetPlayerSpeed(dashDelay));
+        }
 	}
+
+    IEnumerator ResetPlayerSpeed(float delay)
+	{
+        yield return new WaitForSeconds(delay);
+
+        moveSpeed = defaultSpeed;
+    }
 }

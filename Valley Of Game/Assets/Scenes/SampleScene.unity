@@ -246,6 +246,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf58d74dceee8ab489ed5fa9837c558e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultSpeed: 10
+  dashSpeed: 20
+  dashDelay: 0.5
 --- !u!212 &130751606
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -391,6 +394,7 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
+  - component: {fileID: 519420030}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -406,6 +410,21 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
+--- !u!114 &519420030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b628e309d208bb24b8120b84a10ce099, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 130751607}
+  smoothSpeed: 10
+  offset: {x: 0, y: 0, z: -1}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
