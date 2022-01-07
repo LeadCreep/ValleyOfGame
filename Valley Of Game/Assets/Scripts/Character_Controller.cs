@@ -1,14 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Character_Controller : MonoBehaviour
 {
+
+    PlayerControls controls;
+
+    Vector2 move;
     
-    public float defaultSpeed = 10f;
-    public float dashSpeed = 20f;
-    public float dashDelay = 0.5f;
+    public float defaultSpeed = 5f;
+    public float runSpeed = 10f;
     float moveSpeed;
+
+	private void Awake(){
+        controls = new PlayerControls();
+
+        controls.Gameplay.Run.performed += ctx => Run();
+        controls.Gameplay.Run.canceled += ctx => DeRun();
+
+        controls.Gameplay.Move.performed += ctx => move = ctx.ReadValue<Vector2>();
+        controls.Gameplay.Move.canceled += ctx => move = Vector2.zero;
+    }
+
+    void OnEnable(){
+        controls.Gameplay.Enable();
+	}
+
+	private void OnDisable(){
+        controls.Gameplay.Disable();
+	}
 
 	private void Start()
 	{
@@ -17,26 +39,18 @@ public class Character_Controller : MonoBehaviour
 	
 	void Update()
     {
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
+        Vector2 m = new Vector2(move.x, move.y) * Time.deltaTime * moveSpeed;
 
-        Dash();
-
-        transform.Translate(new Vector3(horizontalInput, verticalInput, 0) * moveSpeed * Time.deltaTime);        
+        transform.Translate(m);        
     }
 
-    void Dash()
+    void Run()
 	{
-        if (Input.GetButtonDown("Jump")){
-            moveSpeed = dashSpeed;
-            StartCoroutine(ResetPlayerSpeed(dashDelay));
-        }
+        moveSpeed = runSpeed;
 	}
 
-    IEnumerator ResetPlayerSpeed(float delay)
+    void DeRun()
 	{
-        yield return new WaitForSeconds(delay);
-
         moveSpeed = defaultSpeed;
-    }
+	}
 }
