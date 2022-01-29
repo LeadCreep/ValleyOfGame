@@ -8,6 +8,9 @@ public class DialogueManager : MonoBehaviour
     public Text nameText;
     public Text dialogueText;
 
+    public float pauseDelay = 0.5f;
+    public float normalDelay = 0.05f;
+
     public Animator animator;
 
     private Queue<string> sentences;
@@ -51,12 +54,17 @@ public class DialogueManager : MonoBehaviour
 
     IEnumerator TypeSentence (string sentence)
 	{
+        
         dialogueText.text = "";
+
 
         foreach(char letter in sentence.ToCharArray())
 		{
             dialogueText.text += letter;
-            yield return null;
+            if (letter == ',' ^ letter == '.'){
+                yield return new WaitForSeconds(pauseDelay);
+			}
+            yield return new WaitForSeconds(normalDelay);
 		}
 	}
 

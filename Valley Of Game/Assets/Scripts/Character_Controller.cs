@@ -14,6 +14,7 @@ public class Character_Controller : MonoBehaviour
     public float runSpeed = 10f;
     float moveSpeed;
 
+
 	private void Awake(){
         controls = new PlayerControls();
 
@@ -40,7 +41,6 @@ public class Character_Controller : MonoBehaviour
 	void Update()
     {
         Vector2 m = new Vector2(move.x, move.y) * Time.deltaTime * moveSpeed;
-
         transform.Translate(m);        
     }
 
